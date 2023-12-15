@@ -275,15 +275,53 @@ public class l {
         return merge(left, right);
     }
 
+    public static Node findMid() {
+        Node slow = head;
+        Node fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public static void Zigzag() {
+        Node mid = findMid();
+        Node rh = mid.next;
+        mid.next = null;
+        Node curr = rh;
+        Node prev = null;
+        Node next;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        rh = prev;
+        Node lh = head;
+        Node nextL, nextR;
+        while (lh != null && rh != null) {
+            nextL = lh.next;
+            nextR = rh.next;
+            lh.next = rh;
+            rh.next = nextL;
+
+            lh = nextL;
+            rh = nextR;
+        }
+
+    }
+
     public static void main(String[] args) {
         l ll = new l();
-        ll.addFirst(1);
-        ll.addFirst(2);
-        ll.addFirst(3);
-        ll.addFirst(4);
-        // ll.addFirst(5);
+        ll.addLast(1);
+        ll.addLast(2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
         ll.print();
-        ll.head = ll.mergeSort(ll.head);
+        ll.Zigzag();
         ll.print();
     }
 }
